@@ -15,8 +15,8 @@ ACE-Step takes ~10 GB VRAM; the orchestrator evicts other models while it runs.
 ## A song
 
 Over MCP, call `generate_music` (`style`, optional `lyrics`, `seconds` up to 240,
-`instrumental`, `seed`); it returns a `job_id` for `get_generation_status`, which reports the
-file and a download link when the song is done. Without MCP, or for `negative_prompt`, use REST:
+`instrumental`, `seed`, `model`); it returns a `job_id` for `get_generation_status`, which reports
+the file and a download link when the song is done. Without MCP, use REST:
 
 ```bash
 curl -s -X POST $B/api/audio-foundry/generate/music -H 'Content-Type: application/json' -d '{
@@ -27,9 +27,13 @@ curl -s -X POST $B/api/audio-foundry/generate/music -H 'Content-Type: applicatio
   "output_format": "wav", "seed": 1234, "async": true
 }'
 ```
+- `model`: omit (or `"ace-step"`) for ACE-Step v1; `"ace-step-1.5"` for ACE-Step 1.5 (MIT,
+  48 kHz, turbo model plus a planner) once it is installed in Audio Studio → Manage models.
+  Not installed → `400` with `needs_install`; nothing is downloaded.
 - `style_prompt` uses ACE-Step's tag vocabulary: genre, instruments, mood, tempo, vocal type.
-  Vague words ("professional", "futuristic") drift to the model's prior; be concrete, and use
-  `negative_prompt` to push away from it. `POST $B/api/audio-foundry/rewrite-music-prompt`
+  Vague words ("professional", "futuristic") drift to the model's prior; be concrete.
+  `negative_prompt` is accepted but neither ACE-Step model applies it (the result says
+  `negative_prompt_applied: false`). `POST $B/api/audio-foundry/rewrite-music-prompt`
   turns plain English into the tag form when the user wants help.
 - `lyrics` with `[verse]` / `[chorus]` / `[bridge]` markers; omit or set `instrumental_only: true`.
 - `duration_s` up to 240. Always send `"async": true` for anything over a few seconds.

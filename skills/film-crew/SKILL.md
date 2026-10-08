@@ -33,7 +33,7 @@ Read `setup` first. Needs `comfyui`; casting with trained characters needs
 | **confirm casting** | `POST $B/api/production/$P/casting/confirm` | user gate: every subject needs a cast plan first |
 | storyboard shot image | `GET $B/api/production/$P/storyboard/shot/<shot_id>/image` | review keyframes |
 | redo one shot | `POST $B/api/production/$P/storyboard/shot/<shot_id>/regenerate` | |
-| **approve storyboard** | `POST $B/api/production/$P/storyboard/approve` | user gate: releases the renders |
+| **approve storyboard** | `POST $B/api/production/$P/storyboard/approve` | user gate: releases the renders. A 409 with `flagged_shots` lists frames the curator flagged; show them, and resend with `{"confirm_flagged": true}` only if the user says to render them anyway |
 | retry a failed stage | `POST $B/api/production/$P/retry` | |
 | list / delete | `GET $B/api/production`, `DELETE $B/api/production/$P` | |
 

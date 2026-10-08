@@ -24,7 +24,7 @@ If the backend is not reachable, tell the user to start it from the Guaardvark c
 
 ## Two ways to drive it
 
-1. **MCP tools** (preferred when present): the `guaardvark` MCP server exposes chat, RAG, memory,
+1. **MCP tools** (preferred when present): the `guaardvark` MCP server exposes RAG, memory,
    code intelligence, file processing, web fetch, image/video/animation/music-video/film-crew
    generation, songs and speech (`generate_music`, `generate_speech`),
    `get_generation_status` for any queued batch or song, outreach drafting and GPU/log
