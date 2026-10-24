@@ -44,6 +44,9 @@ description: >-
 `POST $B/api/autoresearch/start {"mode": "...", "budget_hours": 6}`; `GET .../status`,
 `GET .../runs`, `GET .../runs/<run_id>/ledger`; `POST .../stop`. Promotions of a better config are
 explicit: `POST .../promotions/<config_id>/activate`, `POST .../promotions/revert`.
+A run executes on its own Celery worker (`research@<host>`, log `celery_research.log`), started
+with the run and stopped about two minutes after it; the main worker stays free. Its model calls wait
+while a render or training job holds the GPU. `POST .../stop` ends it at its next model call.
 
 ## Infographic
 

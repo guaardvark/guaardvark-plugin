@@ -34,10 +34,18 @@ Read `setup` first. Needs the `comfyui` plugin and an installed i2v model
 | **approve** | `POST $B/api/music-video/$ID/approve` | releases per-clip generation. Only on the user's explicit yes |
 | re-analyse | `POST $B/api/music-video/$ID/analyze` | restart song analysis |
 | cancel | `POST $B/api/music-video/$ID/cancel` | |
-| list all | `GET $B/api/music-video` | |
+| list all | `GET $B/api/music-video` (`?project_id=<id>` or `?project_id=none` to filter) | |
+| progress | `GET $B/api/music-video/$ID/progress` | stages, the clip in flight (sampler step/steps), ETA. Report this instead of guessing |
+| rename / file under a project | `PATCH $B/api/music-video/$ID` with `{name?, project_id?, notes?, tags?}` | the finished video joins that project's Documents |
+| edit one cut | `POST $B/api/music-video/$ID/cut/<idx>` with `{prompt?, seed?, locked?}` | at the approval gate it only changes the plan; **while generating it re-renders that cut**: ask first |
+| reopen a finished video | `POST $B/api/music-video/$ID/revise` | back to the approval gate, rendered clips kept; on approve only changed cuts render. `/replan` re-renders all |
+| copy | `POST $B/api/music-video/$ID/duplicate` with `{name?, project_id?, keep_clips?}` | new video at the approval gate |
+| versions | `GET/POST $B/api/music-video/$ID/revisions`, `POST .../revisions/<rid>/restore` | saved on approve, reassemble, revise, restore; restore lands at the approval gate |
+| a project's videos | `GET $B/api/projects/<id>/videos` | music videos and Film Crew filed under it |
 
 Creating a project without the MCP tool: `POST $B/api/music-video` with
-`{"name", "song_document_id", "style_prompt", "settings": {"i2v_model": "..."}, "user_treatment": "optional short story"}`.
+`{"name", "song_document_id", "style_prompt", "settings": {"i2v_model": "..."}, "user_treatment": "optional short story", "project_id": optional}`.
+The MCP tool takes `project` (a Project id or exact name).
 `user_treatment` becomes the creative source the Director writes cuts from.
 
 ## How to run it well

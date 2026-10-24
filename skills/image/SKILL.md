@@ -37,7 +37,7 @@ Read `setup` first if the backend or the `comfyui` plugin state is unknown.
 
 ## Photo edits over MCP run as jobs
 
-`edit_image`, `inpaint_image`, `outpaint_image` and `remove_background` answer at once over
+`edit_image`, `outpaint_image` and `remove_background` answer at once over
 MCP with `... queued as job tooljob_...`: the work runs in the Guaardvark backend and keeps
 going if the client disconnects. Poll `get_generation_status(batch_id="tooljob_...")` every few
 seconds until `done` (it gives the file URL) or `failed` (it gives the error). Pass
@@ -77,9 +77,9 @@ about three minutes on a 16 GB card, and a job waits its turn while another rend
 - For a new background, remove first then `edit_image` / `generate_identity`, or describe the
   new scene in `edit_image` if Qwen-Image-Edit is installed.
 
-## Inpaint / outpaint
+## Change part of a photo / outpaint
 
-- `inpaint_image`: change or remove something ("remove the coffee cup"). Runs on Qwen-Image-Edit
+- `edit_image`: change or remove something ("remove the coffee cup"). Runs on Qwen-Image-Edit
   or FLUX.1 Kontext; refused when neither is installed.
 - `outpaint_image`: extend the canvas (`left`/`right`/`top`/`bottom` pixels) and fill. Prefers Qwen.
 
