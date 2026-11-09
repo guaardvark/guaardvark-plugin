@@ -33,12 +33,5 @@
       "required": false
     }
   },
-  "mcpServers": {
-    "guaardvark": {
-      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/mcp_launcher.sh",
-      "args": [
-        "${user_config.guaardvark_root}"
-      ]
-    }
-  }
+  "logo": "assets/logo.png"
 }
