@@ -33,5 +33,5 @@
       "required": false
     }
   },
-  "logo": "assets/logo.png"
+  "icon": ".claude-plugin/icon.png"
 }
